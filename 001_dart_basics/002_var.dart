@@ -24,5 +24,6 @@ void main() {
 
 void printvar(String varName, var v) {
   // 输出变量名、变量运行时类型、变量值
+  // 字符串中嵌入变量 $varname；嵌入表达式要加花括号 ${expression}
   print("NAME:$varName\tTYPE:${v.runtimeType}\tVALUE:$v");
 }
