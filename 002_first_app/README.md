@@ -14,3 +14,9 @@ flutter create --platforms=android,web,windows --project-name=first_app .
 ```sh
 flutter run -d windows
 ```
+按照终端提示得调试器地址，打开浏览器，输入地址，即可看到运行结果。
+
+## 3. 体验热重载
+
+程序不要退出，直接修改代码，保存，即可看到修改后的结果（体验热重载，提高开发效率）（如果界面没改变，就在浏览器调试窗口右上角点击一下热重载按钮）。
+
