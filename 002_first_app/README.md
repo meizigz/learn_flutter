@@ -20,3 +20,6 @@ flutter run -d windows
 
 程序不要退出，直接修改代码，保存，即可看到修改后的结果（体验热重载，提高开发效率）（如果界面没改变，就在浏览器调试窗口右上角点击一下热重载按钮）。
 
+## 4. 增加一个按钮
+
+在主界面column widget的children中增加一个ElevatedButton widget。
