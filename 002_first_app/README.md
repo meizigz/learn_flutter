@@ -9,4 +9,8 @@
 flutter create --platforms=android,web,windows --project-name=first_app .
 ```
 
+## 2. 运行
 
+```sh
+flutter run -d windows
+```
