@@ -44,6 +44,7 @@ void main() {
 1. widget都要实现build方法；
 2. build方法接收一个context参数，context是widget树中当前widget的上下文，context中包含了widget树中其他widget的信息，例如：当前widget的父widget，当前widget的子widget，当前widget的兄弟widget等。
 3. build方法要返回一个widget，这个widget就是当前widget的UI。
+4. 为什么不直接把MyApp build方法返回的widget直接作为runApp的参数？这么做实际上也可以的，但是测试的时候，就不方便了。从代码便于维护的角度，建议把MyApp作为runApp的参数。【就是直觉上有点别扭，有点重复累赘的感觉】
 
 ```dart
 // 继承自无状态Widget，没有私有的会变的状态
