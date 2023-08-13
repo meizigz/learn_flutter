@@ -37,6 +37,7 @@ class MyAppState extends ChangeNotifier {
   // 操作状态值的方法
   void getNext() {
     current = WordPair.random();
+    // 广播状态值改变
     notifyListeners();
   }
 }
@@ -59,6 +60,7 @@ class MyHomePage extends StatelessWidget {
             BigCard(pair: pair),
             ElevatedButton(
                 onPressed: () {
+                  // 调用状态对象中的方法，更新状态值。
                   appState.getNext();
                 },
                 child: Text('Next')),

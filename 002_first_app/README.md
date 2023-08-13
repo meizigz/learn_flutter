@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
 
 1. 扩展自ChangeNotifier，和ChangeNotifierProvider配套使用
 2. 定义了用来保存状态值的字段
-3. 定义了操作状态值的方法
+3. 定义了操作状态值的方法，通过notifyListeners()广播状态值发生了改变
 
 ```dart
 // ChangeNotifier和ChangeNotifierProvider配套使用
@@ -86,6 +86,7 @@ class MyAppState extends ChangeNotifier {
   // 操作状态值的方法
   void getNext() {
     current = WordPair.random();
+    // 广播状态值发生了改变
     notifyListeners();
   }
 }
@@ -117,6 +118,7 @@ class MyHomePage extends StatelessWidget {
             BigCard(pair: pair),
             ElevatedButton(
                 onPressed: () {
+                  // 调用状态对象中的方法，更新状态值。
                   appState.getNext();
                 },
                 child: Text('Next')),
