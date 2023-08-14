@@ -1,6 +1,6 @@
 // var变量和指定类型的变量有些差异。
 void main() {
-  // 初始化未赋值，被推断为可变变量
+  // 初始化未赋值，被推断为可变变量。不需要?符号，就能赋值null
   var varType;
   // 类型都是默认值。
   printvar('varType', varType); // TYPE:Null	VALUE:null

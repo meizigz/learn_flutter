@@ -1,5 +1,5 @@
 void main() {
-  dynamic d; // 动态类型。和没有初始值的var一个效果
+  dynamic d; // 动态类型。和没有初始值的var一个效果（类型和值都会变化）
   print(d); // 默认值null
   d = 123; // 赋值整型
   print(d); // 123

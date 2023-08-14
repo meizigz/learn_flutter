@@ -11,8 +11,11 @@ class ConstAbc {
   static var c = 12;
 
   // const构造函数访问的成员必须是final或者const的
+  // this.a的写法是直接把参数值赋值给此对象的成员变量
+  // const构造函数要求所有的成员必须都是final的。才能保证对象创建不变化。
   const ConstAbc(this.a);
-  // 还可以同时拥有非const的构造函数
+
+  // 但还可以同时拥有非const的构造函数。好像没啥用
   ConstAbc.notConst(this.a);
 }
 
@@ -47,5 +50,5 @@ void main() {
   // 如果const对象的成员是个final对象呢？这个final对象的成员的值是否可以修改？
   // const构造函数要求final对象初始值必须是const的，就要把这个成员改成调用const构造函数
   // 然后这个成员又要求自己的成员是final的，如果是对象成员就要求const，就一直嵌套下去了
-  // 所以const对象，其成员也无法修改值，设计上如此，并且在编译阶段就限制住了。
+  // 所以const对象，其成员也无法修改值，设计上如此，并且在编译阶段就限制住了。这点是和final对象不一样的
 }

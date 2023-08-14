@@ -4,7 +4,7 @@ void main() {
   int age = 10; // 局部变量建议用var关键字，交给编译器去推断
   print("$name is $age years old.");
 
-  String cantNullvar; // 不可空变量
+  String cantNullvar; // 不可空变量【能被编译器推断出类型的变量，如果可空，那么必须带?符号】
   // print(cantNullvar);  // error。不可空变量未赋值前不可使用
   // cantNullvar = null; // error。不可空变量不可赋空值
   cantNullvar = "cantNullvar is not null now"; // 非空值赋值后可以

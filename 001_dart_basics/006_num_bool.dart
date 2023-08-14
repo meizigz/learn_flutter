@@ -3,8 +3,8 @@ void main() {
   int hex = 0x1a2b; // 16进制
   double d = 6.2; // 浮点
   num n = d; // num 是int和double的超类
-  print(n.isNaN); // n不是有效数字则为true
-  print(n.isFinite); // 是否是有限制
+  print(i.isNaN); // n不是有效数字则为true
+  print(hex.isFinite); // 是否是有限数
   print(n.isInfinite); // 是否是正负无穷
   print(n.isNegative); // 是否是负数。-0.0也算。
 
@@ -13,4 +13,5 @@ void main() {
 
   bool b = true; // bool类型
   // ==0; == null // 0和null不代表false，要通过关系运算符比较
+  if (b) print("${oneStr}");
 }
