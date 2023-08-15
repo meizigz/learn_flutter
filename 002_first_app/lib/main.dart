@@ -58,7 +58,9 @@ class MyHomePage extends StatelessWidget {
           children: [
             // 提取后的组件，显示当前状态值，通过命名参数传递值
             BigCard(current: current),
-
+            const SizedBox(
+              height: 10,
+            ),
             // children中增加一个按钮
             ElevatedButton(
                 // 传递一个匿名参数，当按钮被按下时调用
