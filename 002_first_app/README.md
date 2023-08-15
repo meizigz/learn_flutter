@@ -321,3 +321,10 @@ class BigCard extends StatelessWidget {
 }
 ```
 
+### 改变组件位置
+
+1. 设置Column的mainAxisAlignment参数为主轴居中（对于Column主轴就是纵轴）
+2. 选中Column，Refactor->Wrap with Center（水平居中）
+
+为了便于查看组件占用的屏幕区域，可以在dev tools的flutter inspector中点击Select Widget Mode，然后Widget Tree中选择组件，就可以在App上看到此组件占用区域的蒙版了。
+

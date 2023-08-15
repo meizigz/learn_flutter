@@ -52,20 +52,23 @@ class MyHomePage extends StatelessWidget {
     var current = appState.current;
 
     return Scaffold(
-      body: Column(
-        children: [
-          // 提取后的组件，显示当前状态值，通过命名参数传递值
-          BigCard(current: current),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, // 主轴居中
+          children: [
+            // 提取后的组件，显示当前状态值，通过命名参数传递值
+            BigCard(current: current),
 
-          // children中增加一个按钮
-          ElevatedButton(
-              // 传递一个匿名参数，当按钮被按下时调用
-              onPressed: () {
-                appState.getNext(); // 操作状态对象
-              },
-              // 传递一个widget作为按钮的显示内容
-              child: const Text('Next')),
-        ],
+            // children中增加一个按钮
+            ElevatedButton(
+                // 传递一个匿名参数，当按钮被按下时调用
+                onPressed: () {
+                  appState.getNext(); // 操作状态对象
+                },
+                // 传递一个widget作为按钮的显示内容
+                child: const Text('Next')),
+          ],
+        ),
       ),
     );
   }
