@@ -1,98 +1,68 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  // flutter框架提供的runApp启动app，需要一个widget作为参数
+  runApp(MyApp());
 }
 
+// 继承自StatelessWidget
 class MyApp extends StatelessWidget {
+  // 构造函数，有一个命名参数。如果有key传入，则直接赋值给super.key
+  // 完整的写法：const MyApp({Key? key}) : super(key: key);
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // widget都有build方法，必须实现，供flutter框架调用
+  // build方法又返回一个widget。为什么不直接把这个widget传给runApp
+  // 是因为测试代码便于使用。await tester.pumpWidget(const MyApp());
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // 创建一个widget作为App的home
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
+// Home 组件类，基本上就是构造函数+创建状态对象
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  // 构造函数。命名参数至少要把title传入进来，如果有key就赋值给super.key
+  MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+  String title;
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+  // 有状态组件必须要实现createState()，也基本固定就是返回自定义状态对象
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// Widget的状态类，私有。状态值以及逻辑都在这个类里面。
 class _MyHomePageState extends State<MyHomePage> {
+  // 保存状态的字段
   int _counter = 0;
 
   void _incrementCounter() {
+    // 修改状态的函数，要作为参数传递给setState()。这样状态修改后，UI才会改变
+    // 此处用了匿名函数
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
+  // 本widget的ui长啥样。每次setState被调用，这个函数就会被调用。
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // 套娃似的，又返回个widget
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+        // 层层套娃。子widget是父widget的child或者children中的一个。
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -106,10 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _incrementCounter, // 关联处理函数的动作
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // 尾部加个逗号，格式化更友好
     );
   }
 }
