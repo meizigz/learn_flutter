@@ -1,6 +1,7 @@
 # First APP
 
 官方文档的第一个例子：  
+
 [Your first Flutter app (google.com)](https://codelabs.developers.google.com/codelabs/flutter-codelab-first#0)
 
 ## 1. 准备工作
@@ -10,158 +11,107 @@
 flutter create --platforms=android,web,windows --project-name=first_app .
 ```
 
+1. 支持的平台
+2. 工程的名称
+3. 保存到当前目录
+
 ### 运行
 
 ```sh
 flutter run -d windows
 ```
-按照终端提示得调试器地址，打开浏览器，输入地址，即可看到运行结果。
 
-### 体验热重载
+1. `flutter devices`可以看当前可用设备
+2. `-d`是`device`，指定设备。
+3. 默认是调试模式，打开浏览器，输入终端提示地址，可以看到调试界面
 
-程序不要退出，直接修改代码，保存，即可看到修改后的结果（体验热重载，提高开发效率）（如果界面没改变，就在浏览器调试窗口右上角点击一下热重载按钮）。
+### 体验热重载提高开发效率
 
-### 增加一个按钮
-
-在主界面column widget的children中增加一个ElevatedButton widget。
+1. 程序不要退出，直接修改代码，保存。
+2. 如果界面没改变，就在浏览器调试窗口右上角点击一下热重载按钮。
 
 ## 2. 初步实现 
 
 实现点击按钮后，生成新的字符串；并初步美化界面。
 
-### 入口：main()函数
+### 引用库
 
-调用flutter框架的runApp启动App，runApp函数接收一个widget作为参数，这个widget就是App的根widget。
+找到项目根目录的pubspec.yaml，增加依赖english_words和provider的依赖：
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
 
-```dart
-void main() {
-  runApp(MyApp()); 
-}
+  english_words: ^4.0.0
+  provider: ^6.0.0
 ```
+保存后，会自动执行`flutter pub get`。
 
-### App Widget：MyApp
-
-1. widget都要实现build方法；
-2. build方法接收一个context参数，context是widget树中当前widget的上下文，context中包含了widget树中其他widget的信息，例如：当前widget的父widget，当前widget的子widget，当前widget的兄弟widget等。
-3. build方法要返回一个widget，这个widget就是当前widget的UI。
-4. 为什么不直接把MyApp build方法返回的widget直接作为runApp的参数？这么做实际上也可以的，但是测试的时候，就不方便了。从代码便于维护的角度，建议把MyApp作为runApp的参数。【就是直觉上有点别扭，有点重复累赘的感觉】
+### 修改入口文件代码 lib/main.dart
 
 ```dart
-// 继承自无状态Widget，没有私有的会变的状态
+import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
+import 'package:provider/provider.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // 覆写build方法。创建widget后，flutter框架以context作为参数来调用，以确定此widget的外观。
   @override
   Widget build(BuildContext context) {
     // 要返回一个widget；ChangeNotifierProvider用来作为全局状态管理
     return ChangeNotifierProvider(
-      // create属性：一个返回ChangeNotifier的函数，一般都是箭头函数，返回一个自定义的状态对象
+      // create参数：一个返回ChangeNotifier的函数，一般都是箭头函数，返回一个自定义的状态对象
       create: (context) => MyAppState(),
-      // child属性：一个和此Provider绑定的widget，此处是创建了一个MaterialApp
+      // child参数：一个和此Provider绑定的widget，此处是创建了一个MaterialApp
       child: MaterialApp(
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
         ),
-        home: MyHomePage(), // 绑定自定义的主界面widget
+        // home参数：绑定自定义的主界面widget
+        home: MyHomePage(),
       ),
     );
   }
 }
-```
 
-### 自定义的全局状态类：MyAppState
-
-1. 扩展自ChangeNotifier，和ChangeNotifierProvider配套使用
-2. 定义了用来保存状态值的字段
-3. 定义了操作状态值的方法，通过notifyListeners()广播状态值发生了改变
-
-```dart
 // ChangeNotifier和ChangeNotifierProvider配套使用
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random(); // 保存状态值的字段
+  // 保存状态值的字段
+  var current = WordPair.random();
 
   // 操作状态值的方法
   void getNext() {
     current = WordPair.random();
-    // 广播状态值发生了改变
+    // 广播状态值改变
     notifyListeners();
   }
 }
-```
 
-### 主界面Widget：MyHomePage
-
-1. 继承自StatelessWidget，没有私有的会变的状态（但通过Provider获取了全局状态）
-2. 覆写build方法，当要创建此widget时，flutter框架以context作为参数来调用。
-3. build方法中通过context.watch<MyAppState>()获取全局状态，并赋值给变量appState。
-4. build方法返回一个widget，此处是Scaffold，其body属性又层层嵌套widget形成了布局。
-
-```dart
+// 此例中的homepage widget没有私有状态了，所以改成从无状态继承
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 通过context.watch<MyAppState>()获取全局状态对象。
     // PS：也可以用Provider.of<MyModel>(context, listen: true)来获取。当listen为false的时候，只取值不监听。
     var appState = context.watch<MyAppState>();
-    // 获取状态对象中保存的状态值
-    var pair = appState.current;
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('A random AWESOME idea:'),
-            BigCard(pair: pair),
-            ElevatedButton(
-                onPressed: () {
-                  // 调用状态对象中的方法，更新状态值。
-                  appState.getNext();
-                },
-                child: Text('Next')),
-          ],
-        ),
+      body: Column(
+        children: [
+          Text('A random idea:'),
+          // 显示当前状态值
+          Text(appState.current.asLowerCase),
+        ],
       ),
     );
   }
 }
 ```
 
-### 自定义字符串显示Widget：BigCard
-
-1. 私有fianl属性pair用来存储要显示的对象
-2. 覆写build方法，flutter框架创建此widget时调用。方法中用存储的值，加上样式，构造了一个Card widget返回。
-
-```dart
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textStyle = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(
-          pair.asLowerCase,
-          style: textStyle,
-        ),
-      ),
-    );
-  }
-}
-```
-
-## 3. 再完善
