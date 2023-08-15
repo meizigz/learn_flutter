@@ -49,13 +49,13 @@ class MyHomePage extends StatelessWidget {
     // 通过context.watch<MyAppState>()获取全局状态对象。
     // PS：也可以用Provider.of<MyModel>(context, listen: true)来获取。当listen为false的时候，只取值不监听。
     var appState = context.watch<MyAppState>();
+    var current = appState.current;
 
     return Scaffold(
       body: Column(
         children: [
-          Text('A random idea:'),
-          // 显示当前状态值
-          Text(appState.current.asLowerCase),
+          // 提取后的组件，显示当前状态值，通过命名参数传递值
+          BigCard(current: current),
 
           // children中增加一个按钮
           ElevatedButton(
@@ -68,5 +68,24 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// 新生成的组件类
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.current, // 命名参数直接绑定到字段
+  });
+
+  final WordPair current; // 保存要显示的值
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Text(current.asLowerCase),
+    ));
   }
 }

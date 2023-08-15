@@ -150,3 +150,112 @@ class MyHomePage extends StatelessWidget {
 ```
 
 ## 4. 改进外观
+
+1. 把用来显示单词的widget单独提取出来
+2. flutter里面层层嵌套，熟悉怎么快速完成widget嵌套
+
+### 准备提取
+
+修改要被提取的控件仅访问所需的内容，避免把过多内容带进去。
+
+```dart
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    // 把要访问的内容单独保存
+    var current = appState.current;
+
+    return Scaffold(
+      body: Column(
+        children: [
+          // 要被提取的Text组件修改为仅访问所需的内容
+          Text(current.asLowerCase),
+
+          ElevatedButton(
+              onPressed: () {
+                appState.getNext(); 
+              },
+              child: const Text('Next')),
+        ],
+      ),
+    );
+  }
+}
+```
+
+### 提取要修改的组件
+
+1. 选中Text组件，右键，Refactor->Extract Widget
+2. 输入提取后新的组件名称，此处输入BigCard。于是得到修改后的代码。
+
+```dart
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var current = appState.current;
+
+    return Scaffold(
+      body: Column(
+        children: [
+          // 提取后的组件，显示当前状态值，通过命名参数传递值
+          BigCard(current: current),
+
+          ElevatedButton(
+              onPressed: () {
+                appState.getNext(); 
+              },
+              child: const Text('Next')),
+        ],
+      ),
+    );
+  }
+}
+
+// 新生成的组件类
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.current,  // 命名参数直接绑定到字段
+  });
+
+  final WordPair current; // 保存要显示的值
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(current.asLowerCase);
+  }
+}
+
+```
+
+### 用Card来包裹Text
+
+1. 选中BigCard中的Text组件，右键，Refactor->Wrap with Widget
+2. 输入Card，按下Enter键。热重载后可以看到Text像个卡片了。
+3. 边距太紧凑，继续选中Text组件，右键，Refactor->Wrap with Padding。修改默认边距为20后，可以效果。
+
+```dart
+// 新生成的组件类
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.current, // 命名参数直接绑定到字段
+  });
+
+  final WordPair current; // 保存要显示的值
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Text(current.asLowerCase),
+    ));
+  }
+}
+```
+
+### 主题和样式
+
