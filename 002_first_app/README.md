@@ -328,3 +328,10 @@ class BigCard extends StatelessWidget {
 
 为了便于查看组件占用的屏幕区域，可以在dev tools的flutter inspector中点击Select Widget Mode，然后Widget Tree中选择组件，就可以在App上看到此组件占用区域的蒙版了。
 
+## 扩展思考
+
+如果不用provider，使用setState的方式，如何实现？
+这时要把MyHomePage改为stateful的，创建个状态对象，状态对象中的build函数中创建按钮和card，按钮点击时，就可以setState来改变自身的状态值，并重新build Card，从而实现Card的显示更新。
+
+## 增加收藏按钮
+
