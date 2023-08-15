@@ -82,10 +82,21 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // 获取主题
+
+    // 复制当前字体主题displayMedium样式，把颜色修改为配色方案中的primary色
+    final textStyle = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
+
     return Card(
+        color: theme.colorScheme.primary, // 使用配色方案中的primary色
         child: Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Text(current.asLowerCase),
-    ));
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+            current.asLowerCase,
+            style: textStyle, // Text组件增加样式
+          ),
+        ));
   }
 }

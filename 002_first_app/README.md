@@ -257,5 +257,67 @@ class BigCard extends StatelessWidget {
 }
 ```
 
-### 主题和样式
+### 修改卡片颜色
+
+1. 获取当前的主题
+2. 把卡片颜色设置为当前主题配色方案的primary color
+
+```dart
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.current, 
+  });
+
+  final WordPair current; 
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context); // 获取主题
+
+    return Card(
+        color: theme.colorScheme.primary, // 使用配色方案中的primary色
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(current.asLowerCase),
+        ));
+  }
+}
+```
+
+### 改变文字样式
+
+1. 从当前主题复制一份文本样式（复制时通过参数指定修改的属性）
+2. 设置Text组件的样式
+
+```dart
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.current, 
+  });
+
+  final WordPair current; 
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context); // 获取主题
+
+    // 复制当前主题之字体主题displayMedium样式，把颜色修改为配色方案中的primary色
+    final textStyle = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
+
+    return Card(
+        color: theme.colorScheme.primary, 
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+            current.asLowerCase,
+            style: textStyle, // Text组件增加样式
+          ),
+        ));
+  }
+}
+```
 
