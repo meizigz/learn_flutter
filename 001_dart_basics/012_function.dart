@@ -47,7 +47,7 @@ void main() {
       // 如果多个表达式，用','分开，用大括号包裹。但这个时候建议就直接用常规匿名函数了。
       (item) => print('$item: ${item.length}'));
 
-  // 命名参数单个名字传值，无法通过展开对象形式传递；
+  // 命名参数使用名字传值，无需大括号；
   enableFlags(false, italic: false, hidden: true); // false false null true。
 
   // 闭包保证变量不会释放。不用担心变量的值是随机的或者非法的
