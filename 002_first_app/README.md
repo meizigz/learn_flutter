@@ -115,3 +115,38 @@ class MyHomePage extends StatelessWidget {
 }
 ```
 
+## 3. 添加按钮
+
+修改`MyHomePage`类代码如下：
+
+```dart
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // 通过context.watch<MyAppState>()获取全局状态对象。
+    // PS：也可以用Provider.of<MyModel>(context, listen: true)来获取。当listen为false的时候，只取值不监听。
+    var appState = context.watch<MyAppState>();
+
+    return Scaffold(
+      body: Column(
+        children: [
+          Text('A random idea:'),
+          // 显示当前状态值
+          Text(appState.current.asLowerCase),
+
+          // children中增加一个按钮
+          ElevatedButton(
+              // 传递一个匿名参数，当按钮被按下时调用
+              onPressed: () {
+                appState.getNext(); // 操作状态对象
+              },
+              // 传递一个widget作为按钮的显示内容
+              child: const Text('Next')),
+        ],
+      ),
+    );
+  }
+}
+```
+
+## 4. 改进外观

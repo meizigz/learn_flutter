@@ -56,6 +56,15 @@ class MyHomePage extends StatelessWidget {
           Text('A random idea:'),
           // 显示当前状态值
           Text(appState.current.asLowerCase),
+
+          // children中增加一个按钮
+          ElevatedButton(
+              // 传递一个匿名参数，当按钮被按下时调用
+              onPressed: () {
+                appState.getNext(); // 操作状态对象
+              },
+              // 传递一个widget作为按钮的显示内容
+              child: const Text('Next')),
         ],
       ),
     );
