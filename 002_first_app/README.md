@@ -335,3 +335,5 @@ class BigCard extends StatelessWidget {
 
 ## 增加收藏按钮
 
+1. 在状态对象里面弄个数组或者set保存要收藏的单词对
+2. 并且在收藏发生变化时，发出广播

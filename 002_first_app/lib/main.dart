@@ -40,6 +40,13 @@ class MyAppState extends ChangeNotifier {
     // 广播状态值改变
     notifyListeners();
   }
+
+  // 保存收藏的set
+  var favorites = <WordPair>{};
+  // 添加元素，如果set中没有，成功添加后发出广播
+  void addFavorite(WordPair wordPair) {
+    if (favorites.add(wordPair)) notifyListeners();
+  }
 }
 
 // 此例中的homepage widget没有私有状态了，所以改成从无状态继承
