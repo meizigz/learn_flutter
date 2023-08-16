@@ -4,7 +4,11 @@
 
 [Your first Flutter app (google.com)](https://codelabs.developers.google.com/codelabs/flutter-codelab-first#0)
 
+一些资源网站：
+
 [Flutter Gems: 一个收集dart和flutter package的网站](https://fluttergems.dev/)
+
+[阿里妈妈矢量图标管理、交流平台](https://www.iconfont.cn/)
 
 ## 1. 准备工作
 ### 创建工程
