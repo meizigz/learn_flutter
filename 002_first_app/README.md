@@ -4,6 +4,8 @@
 
 [Your first Flutter app (google.com)](https://codelabs.developers.google.com/codelabs/flutter-codelab-first#0)
 
+[Flutter Gems: 一个收集dart和flutter package的网站](https://fluttergems.dev/)
+
 ## 1. 准备工作
 ### 创建工程
 
@@ -328,12 +330,15 @@ class BigCard extends StatelessWidget {
 
 为了便于查看组件占用的屏幕区域，可以在dev tools的flutter inspector中点击Select Widget Mode，然后Widget Tree中选择组件，就可以在App上看到此组件占用区域的蒙版了。
 
-## 扩展思考
+## 5. 扩展思考
 
 如果不用provider，使用setState的方式，如何实现？
 这时要把MyHomePage改为stateful的，创建个状态对象，状态对象中的build函数中创建按钮和card，按钮点击时，就可以setState来改变自身的状态值，并重新build Card，从而实现Card的显示更新。
 
-## 增加收藏按钮
+## 6. 增加收藏功能
+
+### 增加收藏按钮
 
 1. 在状态对象里面弄个数组或者set保存要收藏的单词对
 2. 并且在收藏发生变化时，发出广播
+
