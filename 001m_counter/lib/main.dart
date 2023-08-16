@@ -53,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // 本widget的ui长啥样。每次setState被调用，这个函数就会被调用。
+  // flutter框架会高效重建widget，新的值也就生效了
   @override
   Widget build(BuildContext context) {
     // 套娃似的，又返回个widget
