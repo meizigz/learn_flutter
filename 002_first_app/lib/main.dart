@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  debugPaintSizeEnabled = true;
+  // debugPaintSizeEnabled = true;
   runApp(MyApp());
 }
 
@@ -45,9 +44,14 @@ class MyAppState extends ChangeNotifier {
 
   // 保存收藏的set
   var favorites = <WordPair>{};
-  // 添加元素，如果set中没有，成功添加后发出广播
-  void addFavorite(WordPair wordPair) {
-    if (favorites.add(wordPair)) notifyListeners();
+  // 如果set中没有，则加入；如果有，则移除；发出广播
+  void toggleFavorite(WordPair wordPair) {
+    if (favorites.contains(wordPair)) {
+      favorites.remove(wordPair);
+    } else {
+      favorites.add(wordPair);
+    }
+    notifyListeners();
   }
 }
 
@@ -60,6 +64,14 @@ class MyHomePage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
     var current = appState.current;
 
+    // 计算当前界面上图标按钮要显示的图标
+    IconData icon;
+    if (appState.favorites.contains(current)) {
+      icon = Icons.favorite; // 已经包含，实心的
+    } else {
+      icon = Icons.favorite_border; // 未包含，空心的框
+    }
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -70,14 +82,29 @@ class MyHomePage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            // children中增加一个按钮
-            ElevatedButton(
-                // 传递一个匿名参数，当按钮被按下时调用
-                onPressed: () {
-                  appState.getNext(); // 操作状态对象
-                },
-                // 传递一个widget作为按钮的显示内容
-                child: const Text('Next')),
+            // 按钮行
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // 主轴居中
+              children: [
+                ElevatedButton.icon(
+                    // 带图标的按钮
+                    onPressed: () {
+                      appState.toggleFavorite(current); // 切换选中状态
+                    },
+                    icon: Icon(icon),
+                    label: const Text('Like')),
+                const SizedBox(
+                  width: 16,
+                ),
+                ElevatedButton(
+                    // 传递一个匿名参数，当按钮被按下时调用
+                    onPressed: () {
+                      appState.getNext(); // 操作状态对象
+                    },
+                    // 传递一个widget作为按钮的显示内容
+                    child: const Text('Next')),
+              ],
+            ),
           ],
         ),
       ),

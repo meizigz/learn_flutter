@@ -341,8 +341,87 @@ class BigCard extends StatelessWidget {
 
 ## 6. 增加收藏功能
 
-### 增加收藏按钮
+在主界面增加一个收藏按钮，点击后把当前单词加入收藏列表。
 
-1. 在状态对象里面弄个数组或者set保存要收藏的单词对
-2. 并且在收藏发生变化时，发出广播
+1. 在状态对象里面弄个数组或者set保存要收藏的单词对。
+2. 增加操作状态的函数，如果收藏集合有变化则发出广播。
 
+```dart
+class MyAppState extends ChangeNotifier {
+  var current = WordPair.random();
+
+  void getNext() {
+    current = WordPair.random();
+    notifyListeners();
+  }
+
+  // 保存收藏的set
+  var favorites = <WordPair>{};
+  // 如果set中没有，则加入；如果有，则移除；发出广播
+  void toggleFavorite(WordPair wordPair) {
+    if (favorites.contains(wordPair)) {
+      favorites.remove(wordPair);
+    } else {
+      favorites.add(wordPair);
+    }
+    notifyListeners();
+  }
+}
+```
+
+3. 用row包裹next按钮，然后再增加一个收藏按钮（图标按钮），并增加点击事件。
+
+```dart
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var current = appState.current;
+
+    // 计算当前界面上图标按钮要显示的图标
+    IconData icon;
+    if (appState.favorites.contains(current)) {
+      icon = Icons.favorite; // 已经包含，实心的
+    } else {
+      icon = Icons.favorite_border; // 未包含，空心的框
+    }
+
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, 
+          children: [
+            BigCard(current: current),
+            const SizedBox(
+              height: 10,
+            ),
+            // 按钮行
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // 主轴居中
+              children: [
+                ElevatedButton.icon(
+                    // 带图标的按钮
+                    onPressed: () {
+                      appState.toggleFavorite(current); // 切换选中状态
+                    },
+                    icon: Icon(icon),
+                    label: const Text('Like')),
+                const SizedBox(
+                  width: 16,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      appState.getNext(); 
+                    },
+                    child: const Text('Next')),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+第一阶段的Demo，单页应用已经完善了。
