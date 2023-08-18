@@ -44,7 +44,14 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var curFuncIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
@@ -72,9 +79,11 @@ class MyHomePage extends StatelessWidget {
                 label: Text('Favorites'),
               ),
             ],
-            selectedIndex: 0,
+            selectedIndex: curFuncIndex,
             onDestinationSelected: (value) {
-              print('selected: $value');
+              setState(() {
+                curFuncIndex = value;
+              });
             },
           ),
           Expanded(
