@@ -29,3 +29,18 @@
 
 onDestinationSelected增加回调，通过给setState传递一个函数，在这个函数中修改状态值，并且setState触发重新build，于是UI就可以看到当前选择的变化了。
 
+## 5. 实现侧边栏和主界面联动
+
+根据侧边栏的选择，调整加载哪个主界面。
+声明一个变量；根据当前选择的功能给变量赋值；将expanded中的固定child换为变量；
+Placeholder用来临时占位
+
+## 6. 实现侧边栏自适应
+
+将Scaffold重构用Builder包裹；
+修改builder为LayoutBuilder；
+修改build函数，增加constraints参数；
+通过constraints获取屏幕宽度，如果>=600，则侧边栏extended为true，显示文字。
+改变窗口大小可以看到效果；
+
+在flutter中1cm大概包含38逻辑像素。

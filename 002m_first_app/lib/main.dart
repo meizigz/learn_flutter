@@ -64,37 +64,51 @@ class _MyHomePageState extends State<MyHomePage> {
       icon = Icons.favorite_border;
     }
 
-    return Scaffold(
-      body: Row(
-        children: [
-          NavigationRail(
-            extended: false,
-            destinations: [
-              NavigationRailDestination(
-                icon: Icon(Icons.home),
-                label: Text('Home'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.favorite),
-                label: Text('Favorites'),
-              ),
-            ],
-            selectedIndex: curFuncIndex,
-            onDestinationSelected: (value) {
-              setState(() {
-                curFuncIndex = value;
-              });
-            },
-          ),
-          Expanded(
-            child: Container(
+    Widget page;
+    switch (curFuncIndex) {
+      case 0:
+        page = GeneratorPage(current: current, appState: appState, icon: icon);
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('');
+    }
+
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              extended: constraints.maxWidth >= 600,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorites'),
+                ),
+              ],
+              selectedIndex: curFuncIndex,
+              onDestinationSelected: (value) {
+                setState(() {
+                  curFuncIndex = value;
+                });
+              },
+            ),
+            Expanded(
+              child: Container(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                child: GeneratorPage(
-                    current: current, appState: appState, icon: icon)),
-          ),
-        ],
-      ),
-    );
+                child: page,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
