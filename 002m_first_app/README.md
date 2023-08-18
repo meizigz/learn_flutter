@@ -1,16 +1,19 @@
 # first_app2p
 
-A new Flutter project.
+增加侧边栏；
 
-## Getting Started
+## 准备工作
 
-This project is a starting point for a Flutter application.
+创建样板工程`flutter create`
+添加依赖库
+`flutter pub add english_words provider`
+复制代码
 
-A few resources to get you started if this is your first Flutter project:
+## 将现有界面提取为独立Widget
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+将Scaffold的body参数：Center，通过重构，提取为一个新的widget:GeneratorPage。
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 在HomePage增加侧边栏
+
+侧边栏和原界面放到一个row内；侧边栏本身包含2个目标区；原界面通过Expanded占据屏幕剩余空间。
+
