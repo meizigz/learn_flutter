@@ -44,3 +44,8 @@ Placeholder用来临时占位
 改变窗口大小可以看到效果；
 
 在flutter中1cm大概包含38逻辑像素。
+
+## 7. 实现显示收藏的单词对
+
+输入st，看提示，创建一个StatelessWidget；
+从state获取单词对列表，然后创建ListView，用ListTile显示单词对；
