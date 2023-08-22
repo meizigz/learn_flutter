@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // 套娃似的，又返回个widget
     return Scaffold(
       appBar: AppBar(
+        // widget 是本状态绑定的widget
         title: Text(widget.title),
       ),
       body: Center(
