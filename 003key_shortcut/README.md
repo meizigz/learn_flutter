@@ -56,3 +56,10 @@ child: Actions(
       ),
     );
 ```
+
+## CallbackShortcuts版：只需要回调
+
+1. CallbackShortcuts的bindings参数可以直接把ShortcutActivator和VoidCallback绑定起来。
+2. 其child参数仍然是Focus Widget，用来获取焦点。真正的布局就放在焦点里面。
+
+
